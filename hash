@@ -95,10 +95,14 @@ if [ $u = 1 ]; then
 		echo -e "\033[1;32m正在建立md5验证:\033[0m"
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
-			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \;
-			echo -en "\033[0m"
+			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
+			p=$?
+			cat ".md5"
+			echo -e "\033[0m"
+		else
+			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
+			p=$?
 		fi
-		find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
 		if [ $? = 0 ]; then
 			echo -e "\033[1;32m建立md5验证成功！\033[0m"
 		else
@@ -114,14 +118,18 @@ if [ $u = 1 ]; then
 		echo -e "\033[1;32m正在建立sha1验证:\033[0m"
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
-			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \;
-			echo -en "\033[0m"
-		fi
-		find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
-		if [ $? == 0 ]; then
-			echo "\033[1;32m建立sha1验证成功！\033[0m"
+			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
+			p=$?
+			cat ".sha1"
+			echo -e "\033[0m"
 		else
-			echo "\033[1;32m建立sha1验证失败！\033[0m"
+			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
+			p=$?
+		fi
+		if [ $p = 0 ]; then
+			echo -e "\033[1;32m建立sha1验证成功！\033[0m"
+		else
+			echo -e "\033[1;32m建立sha1验证失败！\033[0m"
 			echo -e "\033[1;31m建立验证失败！\033[0m"
 			exit 1
 		fi
@@ -140,13 +148,16 @@ if [ $c = 1 ]; then
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
 			md5sum -c .md5 
-			echo -en "\033[0m"
+			p=$?
+			echo -e "\033[0m"
+		else
+			md5sum -c .md5 --quiet
+			p=$?
 		fi
-		md5sum -c .md5 --quiet 
-		if [ $? == 0 ]; then
+		if [ $p = 0 ]; then
 			echo -e "\033[1;32mmd5验证成功！\033[0m"
 		else
-			echo "\033[1;32mmd5验证失败！\033[0m"
+			echo -e "\033[1;32mmd5验证失败！\033[0m"
 			echo -e "\033[1;31m验证失败!\033[0m"
 			exit 1
 		fi
@@ -160,14 +171,17 @@ if [ $c = 1 ]; then
 		echo -e "\033[1;32m正在sha1验证:\033[0m"
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
-			sha1sum -c .md5 
-			echo -en "\033[0m"
+			sha1sum -c .sha1 
+			p=$?
+			echo -e "\033[0m"
+		else
+			sha1sum -c .sha1 --quiet 
+			p=$?
 		fi
-		sha1sum -c .md5 --quiet 
-		if [ $? == 0 ]; then
+		if [ $p = 0 ]; then
 			echo -e "\033[1;32msha1验证成功！\033[0m"
 		else
-			echo "\033[1;32msha1验证失败！\033[0m"
+			echo -e "\033[1;32msha1验证失败！\033[0m"
 			echo -e "\033[1;31m验证失败!\033[0m"
 			exit 1
 		fi
