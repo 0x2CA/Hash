@@ -8,6 +8,7 @@ c=0
 f=0
 error=0
 file=""
+# 帮助
 help(){
 	echo -e "\033[1;32m帮助\033[0m："
 	echo -e "	[\033[1;31m必选\033[0m]"
@@ -21,6 +22,7 @@ help(){
 	echo -e "\033[1;32m版本\033[0m："
 	echo -e "	\033[1;31mBeta\033[0m:\033[1;36m1.45.1\033[0m"
 }
+# 选项 参数 检查
 check(){
 	if [ $# == 0 ]; then
 		help
@@ -80,19 +82,26 @@ check(){
 		exit 1
 	fi
 }
+# 检查
 check $@
+# 位置是否正确
 if [ ! -d "$file" ]; then
 	echo -e "\033[1;31m错误\033[0m：\033[1;36m位置不存在\033[0m"
 	exit 1
 fi
+# 切换工作路径
 cd $file
+# 建立验证
 if [ $u = 1 ]; then
-	echo -e "\033[1;31m开始建立验证:\033[0m"	
+	echo -e "\033[1;31m开始建立验证:\033[0m"
+	# 建立md5验证	
 	if [ $m = 1 ]; then
+		# 判断 删除 旧的验证
 		if [ -f ".md5" ]; then
 			rm .md5
 		fi
 		echo -e "\033[1;32m正在建立md5验证:\033[0m"
+		# 是否显示
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
@@ -100,9 +109,12 @@ if [ $u = 1 ]; then
 			cat ".md5"
 			echo -e "\033[0m"
 		else
+			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
 			p=$?
+			echo -e "\033[0m"
 		fi
+		# 判断是否成功
 		if [ $? = 0 ]; then
 			echo -e "\033[1;32m建立md5验证成功！\033[0m"
 		else
@@ -111,11 +123,14 @@ if [ $u = 1 ]; then
 			exit 1
 		fi
 	fi
+	# 建立sha1验证
 	if [ $s = 1 ]; then
+		# 判断 删除 旧的验证
 		if [ -f ".sha1" ]; then
 			rm .sha1
 		fi
 		echo -e "\033[1;32m正在建立sha1验证:\033[0m"
+		# 是否显示
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
@@ -123,9 +138,12 @@ if [ $u = 1 ]; then
 			cat ".sha1"
 			echo -e "\033[0m"
 		else
+			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
 			p=$?
+			echo -e "\033[0m"
 		fi
+		# 判断是否成功
 		if [ $p = 0 ]; then
 			echo -e "\033[1;32m建立sha1验证成功！\033[0m"
 		else
@@ -136,24 +154,31 @@ if [ $u = 1 ]; then
 	fi
 	echo -e "\033[1;31m建立验证成功！\033[0m"
 fi
+# 开始验证
 if [ $c = 1 ]; then
 	echo -e "\033[1;31m开始验证:\033[0m"
+	# 开始md5验证
 	if [ $m = 1 ]; then
+		# 判断 是否已经建立验证
 		if [ ! -f ".md5" ]; then
 			echo -e "\033[1;31m错误:\033[0m\033[1;32m没有建立md5验证！\033[0m"
 			echo -e "\033[1;31m验证失败！\033[0m"
 			exit 1
 		fi
 		echo -e "\033[1;32m正在md5验证:\033[0m"
+		# 是否显示
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
 			md5sum -c .md5 
 			p=$?
 			echo -e "\033[0m"
 		else
+			echo -en "\033[1;36m"
 			md5sum -c .md5 --quiet
 			p=$?
+			echo -e "\033[0m"
 		fi
+		# 判断是否成功
 		if [ $p = 0 ]; then
 			echo -e "\033[1;32mmd5验证成功！\033[0m"
 		else
@@ -162,22 +187,28 @@ if [ $c = 1 ]; then
 			exit 1
 		fi
 	fi
+	# 开始sha1验证
 	if [ $s = 1 ]; then
+		# 判断 是否已经建立验证
 		if [ ! -f ".sha1" ]; then
 			echo -e "\033[1;31m错误:\033[0m\033[1;32m没有建立sha1验证！\033[0m"
 			echo -e "\033[1;31m验证失败！\033[0m"
 			exit 1
 		fi
 		echo -e "\033[1;32m正在sha1验证:\033[0m"
+		# 是否显示
 		if [ $v = 1 ]; then
 			echo -en "\033[1;36m"
 			sha1sum -c .sha1 
 			p=$?
 			echo -e "\033[0m"
 		else
+			echo -en "\033[1;36m"
 			sha1sum -c .sha1 --quiet 
 			p=$?
+			echo -e "\033[0m"
 		fi
+		# 判断是否成功
 		if [ $p = 0 ]; then
 			echo -e "\033[1;32msha1验证成功！\033[0m"
 		else
