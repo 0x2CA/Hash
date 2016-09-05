@@ -16,9 +16,9 @@
 ```
 ## 范例
 ```
-\*\*$ ls\*\*
+**$ ls**
 hash
-\*\*$ ./hash -umsvf hash\*\*
+**$ ./hash -umsvf hash**
 开始建立验证:
 正在建立md5验证:
 ac62b3ad05d95ec1084e0fa9c18c8c56  ./hash
@@ -27,7 +27,7 @@ ac62b3ad05d95ec1084e0fa9c18c8c56  ./hash
 613ca708817a08c127ab6819f2eef607dda4c369  ./hash
 建立sha1验证成功！
 建立验证成功！
-\*\*$ ./hash -cmsvf hash\*\*
+**$ ./hash -cmsvf hash**
 开始验证:
 正在md5验证:
 ./hash: 成功
