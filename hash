@@ -107,12 +107,12 @@ if [ $u = 1 ]; then
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
 			p=$?
 			cat ".md5"
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		else
 			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec md5sum {} \; > .md5
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		fi
 		# 判断是否成功
 		if [ $? = 0 ]; then
@@ -136,12 +136,12 @@ if [ $u = 1 ]; then
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
 			p=$?
 			cat ".sha1"
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		else
 			echo -en "\033[1;36m"
 			find . -type f ! -name ".md5" ! -name ".sha1" -exec sha1sum {} \; > .sha1
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		fi
 		# 判断是否成功
 		if [ $p = 0 ]; then
@@ -171,12 +171,12 @@ if [ $c = 1 ]; then
 			echo -en "\033[1;36m"
 			md5sum -c .md5 
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		else
 			echo -en "\033[1;36m"
 			md5sum -c .md5 --quiet
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		fi
 		# 判断是否成功
 		if [ $p = 0 ]; then
@@ -201,12 +201,12 @@ if [ $c = 1 ]; then
 			echo -en "\033[1;36m"
 			sha1sum -c .sha1 
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		else
 			echo -en "\033[1;36m"
 			sha1sum -c .sha1 --quiet 
 			p=$?
-			echo -e "\033[0m"
+			echo -en "\033[0m"
 		fi
 		# 判断是否成功
 		if [ $p = 0 ]; then
