@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo cp ./hash /usr/bin/hash
+sudo cp ./hashs /usr/bin/hashs
