@@ -1,6 +1,6 @@
 # Hash
 1. **一个建立Hash验证和验证Hash的Shell**
-2. **一个计算hash的页面（只支持字符串）** [连接](./hash-web/index.html)
+2. **一个计算hash的页面（只支持字符串）** [连接](https://invalidcode.github.io/hash-web/)
 
 ## 帮助
 ```
