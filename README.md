@@ -1,5 +1,7 @@
 # Hash
-**一个建立Hash验证和验证Hash的Shell**
+1. **一个建立Hash验证和验证Hash的Shell**
+2. **一个计算hash的页面（只支持字符串）** [连接](./hash-web/index.html)
+
 ## 帮助
 ```
 帮助：
